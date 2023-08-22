@@ -1,6 +1,6 @@
 #include "main.h"
 /**
- * getPrec - gets the precisions need
+ * getPrec - Calculates the precision for printing
  * @format: standard printf format
  * @i: args to be retrieved
  * @list: array of args
