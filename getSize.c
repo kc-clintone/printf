@@ -1,6 +1,6 @@
 #include "main.h"
 /**
- * getSize - evaluates args size
+ * getSize - Calculates the size to cast the argument
  * @format: standard format
  * @i: array of args
  * Return: size
