@@ -78,19 +78,16 @@ int write_number(int is_negative, int ind, char buffer[],
  * @width: width
  * @prec: Precision specifier
  * @length: Number length
- * @padd: Pading char
- * @extra_c: Extra char
- *
+ * @spacer: Pading char
+ * @extra_chr: Extra char
  * Return: Number of printed chars.
  */
-int write_num(int ind, char buffer[],
-	int flags, int width, int prec,
-	int length, char spacer, char extra_chr)
+int write_num(int ind, char buffer[], int flags, int width,
+	int prec, int length, char spacer, char extra_chr)
 {
 	int i, initial_spacer = 1;
 
-	if (prec == 0 && ind == BUFFER - 2 &&
-		buffer[ind] == '0' && width == 0)
+	if (prec == 0 && ind == BUFFER - 2 && buffer[ind] == '0' && width == 0)
 		return (0);
 	if (prec == 0 && ind == BUFFER - 2 && buffer[ind] == '0')
 		buffer[ind] = spacer = ' ';
@@ -109,23 +106,20 @@ int write_num(int ind, char buffer[],
 		{
 			if (extra_chr)
 				buffer[--ind] = extra_chr;
-			return (write(1, &buffer[ind], length)
-				+ write(1, &buffer[1], i - 1));
+			return (write(1, &buffer[ind], length) + write(1, &buffer[1], i - 1));
 		}
 		else if (!(flags & NEG) && spacer == ' ')
 		{
 			if (extra_chr)
 				buffer[--ind] = extra_chr;
-			return (write(1, &buffer[1], i - 1)
-				+ write(1, &buffer[ind], length));
+			return (write(1, &buffer[1], i - 1) + write(1, &buffer[ind], length));
 		}
 		else if (!(flags & NEG) && spacer == '0')
 		{
 			if (extra_chr)
 				buffer[--initial_spacer] = extra_chr;
 			return (write(1, &buffer[initial_spacer], i
-				- initial_spacer) + write(1, &buffer[ind],
-				length - (1 - initial_spacer)));
+- initial_spacer) + write(1, &buffer[ind], length - (1 - initial_spacer)));
 		}
 	}
 	if (extra_chr)
@@ -213,7 +207,7 @@ int write_pointer(char buffer[], int ind, int length,
 			buffer[--ind] = '0';
 			if (extra_c)
 				buffer[--ind] = extra_c;
-			return (write(1, &buffer[ind],length)
+			return (write(1, &buffer[ind], length)
 				+ write(1, &buffer[3], i - 3));
 		}
 		else if (!(flags & NEG) && padd == ' ')
@@ -222,8 +216,7 @@ int write_pointer(char buffer[], int ind, int length,
 			buffer[--ind] = '0';
 			if (extra_c)
 				buffer[--ind] = extra_c;
-			return (write(1, &buffer[3], i - 3)
-				+ write(1, &buffer[ind], length));
+			return (write(1, &buffer[3], i - 3) + write(1, &buffer[ind], length));
 		}
 		else if (!(flags & NEG) && padd == '0')
 		{
@@ -231,9 +224,8 @@ int write_pointer(char buffer[], int ind, int length,
 				buffer[--padd_start] = extra_c;
 			buffer[1] = '0';
 			buffer[2] = 'x';
-			return (write(1, &buffer[padd_start], i
-				- padd_start) + write(1, &buffer[ind],
-				length - (1 - padd_start) - 2));
+			return (write(1, &buffer[padd_start], i - padd_start)
++ write(1, &buffer[ind], length - (1 - padd_start) - 2));
 		}
 	}
 	buffer[--ind] = 'x';
